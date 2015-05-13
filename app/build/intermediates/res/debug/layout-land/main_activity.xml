@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageViewSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/setting_icon"
+            android:onClick="goingToSettings"
+            android:clickable="true" />
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewSettings"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/mobile_finder"
+            android:onClick="OnOffClicked"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:id="@+id/imageViewOnOffButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/on_btn"
+            android:clickable="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/imageViewLogo"
+            android:onClick="OnOffClicked" />
+
+        <TextView
+            android:id="@+id/TextViewMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewOnOffButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"/>
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout><!-- From: file:/C:/Users/anirban/AndroidStudioProjects/WhereRU/app/src/main/res/layout-land/main_activity.xml -->
