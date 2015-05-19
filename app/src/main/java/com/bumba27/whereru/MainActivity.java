@@ -2,13 +2,13 @@ package com.bumba27.whereru;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumba27.utils.ReuseableClass;
 
 public class MainActivity extends Activity{
 
@@ -25,35 +25,36 @@ public class MainActivity extends Activity{
 
 		imageViewOnOffButton = (ImageView)findViewById(R.id.imageViewOnOffButton);
 		TextViewMessage		 = (TextView)findViewById(R.id.TextViewMessage);
+		TextViewMessage.setTypeface(ReuseableClass.getFontStyle(this));
 
-		if(getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("off") || getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase(""))
+		if(ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("off") || ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase(""))
 		{
 			imageViewOnOffButton.setImageResource(R.drawable.off_btn);
-			TextViewMessage.setText(getString(R.string.listening_message));
+			TextViewMessage.setText(getString(R.string.stop_listening));
 		}
-		else if(getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("on"))
+		else if(ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("on"))
 		{
 			imageViewOnOffButton.setImageResource(R.drawable.on_btn);
-			TextViewMessage.setText(getString(R.string.stop_listening_message));
+			TextViewMessage.setText(getString(R.string.start_listening));
 		}
 	}
 
 	//Your phone will  when you will call him as "android phone" loudly 
 	public void OnOffClicked(View v) 
 	{
-		if(getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("off") || getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase(""))
+		if(ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("off") || ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase(""))
 		{
 			imageViewOnOffButton.setImageResource(R.drawable.on_btn);
-			TextViewMessage.setText(R.string.listening_message);
-			saveInPreference("onOffFlag", "on", MainActivity.this);
+			TextViewMessage.setText(R.string.start_listening);
+			ReuseableClass.saveInPreference("onOffFlag", "on", MainActivity.this);
 			startService(new Intent(this, SimpleVoiceService.class));
 		}
-		else if(getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("on"))
+		else if(ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("on"))
 		{
 			imageViewOnOffButton.setImageResource(R.drawable.off_btn);
 			//Your phone is not listening to you !!
-			TextViewMessage.setText(R.string.stop_listening_message);
-			saveInPreference("onOffFlag", "off", MainActivity.this);
+			TextViewMessage.setText(R.string.stop_listening);
+			ReuseableClass.saveInPreference("onOffFlag", "off", MainActivity.this);
 			stopService(new Intent(this, SimpleVoiceService.class));
 		}
 	}
@@ -66,37 +67,6 @@ public class MainActivity extends Activity{
 		startActivity(myIntent);
 	}
 	
-	//===================================================================================================================================
-	//Preference variable
-	//===================================================================================================================================
-
-	//--------------------------------------------
-	// method to save variable in preference
-	//--------------------------------------------
-	public static void saveInPreference(String name, String content, Activity myActivity) {
-		SharedPreferences preferences = PreferenceManager
-				.getDefaultSharedPreferences(myActivity);
-		SharedPreferences.Editor editor = preferences.edit();
-		editor.putString(name, content);
-		editor.commit();
-	}
-
-	//--------------------------------------------
-	// getting content from preferences
-	//--------------------------------------------
-	public static String getFromPreference(String variable_name, Activity myActivity) {
-		String preference_return;
-		SharedPreferences preferences = PreferenceManager
-				.getDefaultSharedPreferences(myActivity);
-		preference_return = preferences.getString(variable_name, "");
-
-		return preference_return;
-	}
-
-	//===================================================================================================================================
-	//Preference variable
-	//===================================================================================================================================
-
 	@Override
 	public void onBackPressed()
 	{

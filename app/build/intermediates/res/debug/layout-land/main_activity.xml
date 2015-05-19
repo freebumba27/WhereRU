@@ -35,7 +35,6 @@
             android:id="@+id/imageViewOnOffButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/on_btn"
             android:clickable="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
@@ -49,6 +48,7 @@
             android:layout_below="@+id/imageViewOnOffButton"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
+            android:textSize="18dp"
             android:gravity="center_horizontal"/>
 
     </RelativeLayout>

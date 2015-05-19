@@ -19,6 +19,8 @@ import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bumba27.utils.ReuseableClass;
+
 import java.util.ArrayList;
 
 public class SimpleVoiceService extends Service implements RecognitionListener {
@@ -83,14 +85,10 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 		final Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {
 			@Override
-			public void run() 
-			{
-				if(getFromPreference("onOffFlag", SimpleVoiceService.this).equalsIgnoreCase("on"))
-				{
+			public void run() {
+				if (getFromPreference("onOffFlag", SimpleVoiceService.this).equalsIgnoreCase("on")) {
 					speech.startListening(recognizerIntent);
-				}
-				else
-				{
+				} else {
 					//speech.stopListening();
 					return;
 				}
@@ -140,11 +138,18 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 				long[] pattern = {0, 100, 1000, 300, 200, 100, 500, 200, 100};
 				v.vibrate(pattern, -1);
 
-		        Uri alert = Uri.parse("android.resource://" + con.getPackageName() + "/" + R.raw.i_am_here);
-		        final MediaPlayer mMediaPlayer = new MediaPlayer();
+				Uri alert = null;
+				if(ReuseableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this).equalsIgnoreCase(""))
+				{
+					alert = Uri.parse("android.resource://" + con.getPackageName() + "/" + R.raw.i_am_here);
+				}
+				else
+				{
+					alert = Uri.parse(ReuseableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this));
+				}
 
-		        mMediaPlayer.setDataSource(this, alert);
-
+				final MediaPlayer mMediaPlayer = new MediaPlayer();
+				mMediaPlayer.setDataSource(this, alert);
 		        final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		        try 
 		        {
@@ -174,7 +179,7 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 			} 
 			catch(Exception e)
 			{
-				// handle error here.. 
+				Toast.makeText(this, "Media file not supported !!", Toast.LENGTH_LONG).show();
 			}
 
 		}
