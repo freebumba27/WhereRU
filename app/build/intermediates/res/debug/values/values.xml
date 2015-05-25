@@ -197,10 +197,13 @@
     <string name="double_back_press_message">Press again to exit !!</string>
     <string name="hello_world">Hello world!</string>
     <string name="ring_tone_selection_error">Due to some error no ringtone selected. Try another !!</string>
+    <string name="save_button_txt">SAVE</string>
+    <string name="say_some_thing_btn">Say Something</string>
     <string name="select_your_ring_tone">Select your ringtone:</string>
     <string name="start_listening">I am listening to you !!</string>
     <string name="stop_listening">I stop listening to you !!</string>
     <string name="thanks_for_saving_ringtone">Thanks for saving your ring tone.</string>
+    <string name="title_activity_rec_own_voice">RecOwnVoice</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="trial_period_expaired">Sorry! Trial period expired. Purchase full version of the application.</string>
     <!-- From: file:/C:/Users/anirban/AndroidStudioProjects/WhereRU/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->

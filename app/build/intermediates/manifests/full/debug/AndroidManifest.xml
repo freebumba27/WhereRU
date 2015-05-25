@@ -39,6 +39,10 @@
         <activity
             android:name="com.bumba27.whereru.SettingsActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name="com.bumba27.whereru.RecOwnVoice"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>

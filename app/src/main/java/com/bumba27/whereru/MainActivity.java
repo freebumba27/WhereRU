@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumba27.utils.ReuseableClass;
+import com.bumba27.utils.ReusableClass;
 
 public class MainActivity extends Activity{
 
@@ -25,14 +25,14 @@ public class MainActivity extends Activity{
 
 		imageViewOnOffButton = (ImageView)findViewById(R.id.imageViewOnOffButton);
 		TextViewMessage		 = (TextView)findViewById(R.id.TextViewMessage);
-		TextViewMessage.setTypeface(ReuseableClass.getFontStyle(this));
+		TextViewMessage.setTypeface(ReusableClass.getFontGillSansMTProStyle(this));
 
-		if(ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("off") || ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase(""))
+		if(ReusableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("off") || ReusableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase(""))
 		{
 			imageViewOnOffButton.setImageResource(R.drawable.off_btn);
 			TextViewMessage.setText(getString(R.string.stop_listening));
 		}
-		else if(ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("on"))
+		else if(ReusableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("on"))
 		{
 			imageViewOnOffButton.setImageResource(R.drawable.on_btn);
 			TextViewMessage.setText(getString(R.string.start_listening));
@@ -42,19 +42,19 @@ public class MainActivity extends Activity{
 	//Your phone will  when you will call him as "android phone" loudly 
 	public void OnOffClicked(View v) 
 	{
-		if(ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("off") || ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase(""))
+		if(ReusableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("off") || ReusableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase(""))
 		{
 			imageViewOnOffButton.setImageResource(R.drawable.on_btn);
 			TextViewMessage.setText(R.string.start_listening);
-			ReuseableClass.saveInPreference("onOffFlag", "on", MainActivity.this);
+			ReusableClass.saveInPreference("onOffFlag", "on", MainActivity.this);
 			startService(new Intent(this, SimpleVoiceService.class));
 		}
-		else if(ReuseableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("on"))
+		else if(ReusableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("on"))
 		{
 			imageViewOnOffButton.setImageResource(R.drawable.off_btn);
 			//Your phone is not listening to you !!
 			TextViewMessage.setText(R.string.stop_listening);
-			ReuseableClass.saveInPreference("onOffFlag", "off", MainActivity.this);
+			ReusableClass.saveInPreference("onOffFlag", "off", MainActivity.this);
 			stopService(new Intent(this, SimpleVoiceService.class));
 		}
 	}

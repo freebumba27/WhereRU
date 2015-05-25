@@ -54,46 +54,52 @@ ADDED from AndroidManifest.xml:17:5
 	android:name
 		ADDED from AndroidManifest.xml:17:22
 application
-ADDED from AndroidManifest.xml:19:5
+ADDED from AndroidManifest.xml:18:5
 MERGED from com.android.support:appcompat-v7:22.1.1:22:5
 MERGED from com.android.support:support-v4:22.1.1:22:5
 	android:label
-		ADDED from AndroidManifest.xml:22:9
-	android:allowBackup
-		ADDED from AndroidManifest.xml:20:9
-	android:icon
 		ADDED from AndroidManifest.xml:21:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:19:9
+	android:icon
+		ADDED from AndroidManifest.xml:20:9
 	android:theme
-		ADDED from AndroidManifest.xml:23:9
+		ADDED from AndroidManifest.xml:22:9
 activity#com.bumba27.whereru.SplashScreen
-ADDED from AndroidManifest.xml:24:9
+ADDED from AndroidManifest.xml:23:9
 	android:theme
-		ADDED from AndroidManifest.xml:26:13
-	android:name
 		ADDED from AndroidManifest.xml:25:13
+	android:name
+		ADDED from AndroidManifest.xml:24:13
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:27:13
+ADDED from AndroidManifest.xml:26:13
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:28:17
+ADDED from AndroidManifest.xml:27:17
 	android:name
-		ADDED from AndroidManifest.xml:28:25
+		ADDED from AndroidManifest.xml:27:25
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:30:17
+ADDED from AndroidManifest.xml:29:17
 	android:name
-		ADDED from AndroidManifest.xml:30:27
+		ADDED from AndroidManifest.xml:29:27
 activity#com.bumba27.whereru.MainActivity
-ADDED from AndroidManifest.xml:33:9
+ADDED from AndroidManifest.xml:32:9
 	android:theme
-		ADDED from AndroidManifest.xml:35:13
-	android:name
 		ADDED from AndroidManifest.xml:34:13
+	android:name
+		ADDED from AndroidManifest.xml:33:13
 service#com.bumba27.whereru.SimpleVoiceService
-ADDED from AndroidManifest.xml:37:9
+ADDED from AndroidManifest.xml:36:9
 	android:name
-		ADDED from AndroidManifest.xml:37:18
+		ADDED from AndroidManifest.xml:36:18
 activity#com.bumba27.whereru.SettingsActivity
-ADDED from AndroidManifest.xml:39:9
+ADDED from AndroidManifest.xml:38:9
 	android:theme
-		ADDED from AndroidManifest.xml:41:13
-	android:name
 		ADDED from AndroidManifest.xml:40:13
+	android:name
+		ADDED from AndroidManifest.xml:39:13
+activity#com.bumba27.whereru.RecOwnVoice
+ADDED from AndroidManifest.xml:41:9
+	android:theme
+		ADDED from AndroidManifest.xml:43:13
+	android:name
+		ADDED from AndroidManifest.xml:42:13

@@ -1514,17 +1514,19 @@ containing a value of this type.
         public static final int abc_textfield_search_material=0x7f02003a;
         public static final int background=0x7f02003b;
         public static final int choose_ringtone_btn=0x7f02003c;
-        public static final int ic_launcher=0x7f02003d;
-        public static final int logo=0x7f02003e;
-        public static final int mobile_finder=0x7f02003f;
-        public static final int off_btn=0x7f020040;
-        public static final int on_btn=0x7f020041;
-        public static final int record_voice_btn=0x7f020042;
-        public static final int setting_icon=0x7f020043;
+        public static final int google_voice_icon=0x7f02003d;
+        public static final int ic_launcher=0x7f02003e;
+        public static final int logo=0x7f02003f;
+        public static final int mobile_finder=0x7f020040;
+        public static final int off_btn=0x7f020041;
+        public static final int on_btn=0x7f020042;
+        public static final int record_voice_btn=0x7f020043;
+        public static final int save_btn=0x7f020044;
+        public static final int setting_icon=0x7f020045;
     }
     public static final class id {
         public static final int TextViewCenter=0x7f0d004f;
-        public static final int TextViewMessage=0x7f0d0056;
+        public static final int TextViewMessage=0x7f0d005a;
         public static final int action_bar=0x7f0d0040;
         public static final int action_bar_activity_content=0x7f0d0000;
         public static final int action_bar_container=0x7f0d003f;
@@ -1538,7 +1540,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0d003d;
         public static final int action_mode_bar_stub=0x7f0d003c;
         public static final int action_mode_close_button=0x7f0d0025;
-        public static final int action_settings=0x7f0d0059;
+        public static final int action_settings=0x7f0d005d;
         public static final int activity_chooser_view_content=0x7f0d0026;
         public static final int alertTitle=0x7f0d0030;
         public static final int always=0x7f0d0016;
@@ -1563,12 +1565,13 @@ containing a value of this type.
         public static final int icon=0x7f0d002b;
         public static final int ifRoom=0x7f0d0018;
         public static final int image=0x7f0d0028;
-        public static final int imageView=0x7f0d0051;
-        public static final int imageView2=0x7f0d0052;
-        public static final int imageViewLogo=0x7f0d0054;
-        public static final int imageViewOnOffButton=0x7f0d0055;
-        public static final int imageViewSettings=0x7f0d0053;
-        public static final int linearLayoutLogoLayout=0x7f0d0057;
+        public static final int imageView=0x7f0d0055;
+        public static final int imageView2=0x7f0d0056;
+        public static final int imageViewGoogleVoice=0x7f0d0051;
+        public static final int imageViewLogo=0x7f0d0058;
+        public static final int imageViewOnOffButton=0x7f0d0059;
+        public static final int imageViewSettings=0x7f0d0057;
+        public static final int linearLayoutLogoLayout=0x7f0d005b;
         public static final int listMode=0x7f0d0009;
         public static final int list_item=0x7f0d002a;
         public static final int middle=0x7f0d0015;
@@ -1580,6 +1583,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f0d0005;
         public static final int progress_horizontal=0x7f0d0006;
         public static final int radio=0x7f0d003a;
+        public static final int save_button=0x7f0d0053;
         public static final int screen=0x7f0d001f;
         public static final int scrollView=0x7f0d0032;
         public static final int search_badge=0x7f0d0044;
@@ -1604,8 +1608,10 @@ containing a value of this type.
         public static final int submit_area=0x7f0d004b;
         public static final int tabMode=0x7f0d000b;
         public static final int textSpacerNoButtons=0x7f0d0033;
-        public static final int textView=0x7f0d0050;
-        public static final int textViewTagName=0x7f0d0058;
+        public static final int textView=0x7f0d0054;
+        public static final int textViewResult=0x7f0d0052;
+        public static final int textViewTagName=0x7f0d005c;
+        public static final int textViewTitle=0x7f0d0050;
         public static final int title=0x7f0d002c;
         public static final int title_template=0x7f0d002f;
         public static final int topPanel=0x7f0d002e;
@@ -1645,16 +1651,18 @@ containing a value of this type.
         public static final int abc_search_view=0x7f040016;
         public static final int abc_select_dialog_material=0x7f040017;
         public static final int abc_simple_dropdown_hint=0x7f040018;
-        public static final int activity_settings=0x7f040019;
-        public static final int main_activity=0x7f04001a;
-        public static final int select_dialog_item_material=0x7f04001b;
-        public static final int select_dialog_multichoice_material=0x7f04001c;
-        public static final int select_dialog_singlechoice_material=0x7f04001d;
-        public static final int spash_screen=0x7f04001e;
-        public static final int support_simple_spinner_dropdown_item=0x7f04001f;
+        public static final int activity_rec_own_voice=0x7f040019;
+        public static final int activity_settings=0x7f04001a;
+        public static final int main_activity=0x7f04001b;
+        public static final int select_dialog_item_material=0x7f04001c;
+        public static final int select_dialog_multichoice_material=0x7f04001d;
+        public static final int select_dialog_singlechoice_material=0x7f04001e;
+        public static final int spash_screen=0x7f04001f;
+        public static final int support_simple_spinner_dropdown_item=0x7f040020;
     }
     public static final class menu {
-        public static final int menu_settings=0x7f0e0000;
+        public static final int menu_rec_own_voice=0x7f0e0000;
+        public static final int menu_settings=0x7f0e0001;
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;
@@ -1685,12 +1693,15 @@ containing a value of this type.
         public static final int double_back_press_message=0x7f070013;
         public static final int hello_world=0x7f070014;
         public static final int ring_tone_selection_error=0x7f070015;
-        public static final int select_your_ring_tone=0x7f070016;
-        public static final int start_listening=0x7f070017;
-        public static final int stop_listening=0x7f070018;
-        public static final int thanks_for_saving_ringtone=0x7f070019;
-        public static final int title_activity_settings=0x7f07001a;
-        public static final int trial_period_expaired=0x7f07001b;
+        public static final int save_button_txt=0x7f070016;
+        public static final int say_some_thing_btn=0x7f070017;
+        public static final int select_your_ring_tone=0x7f070018;
+        public static final int start_listening=0x7f070019;
+        public static final int stop_listening=0x7f07001a;
+        public static final int thanks_for_saving_ringtone=0x7f07001b;
+        public static final int title_activity_rec_own_voice=0x7f07001c;
+        public static final int title_activity_settings=0x7f07001d;
+        public static final int trial_period_expaired=0x7f07001e;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f09006c;

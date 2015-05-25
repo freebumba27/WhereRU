@@ -10,7 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumba27.utils.ReuseableClass;
+import com.bumba27.utils.ReusableClass;
 
 
 public class SplashScreen extends Activity {
@@ -23,9 +23,9 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.spash_screen);
 
-        if(ReuseableClass.getFromPreference("appStartingDate", this).equalsIgnoreCase(""))
+        if(ReusableClass.getFromPreference("appStartingDate", this).equalsIgnoreCase(""))
         {
-            ReuseableClass.saveInPreference("appStartingDate",System.currentTimeMillis()+"", this);
+            ReusableClass.saveInPreference("appStartingDate", System.currentTimeMillis() + "", this);
         }
 
 
@@ -35,15 +35,15 @@ public class SplashScreen extends Activity {
         logo_layout.setAnimation(slideUp);
 
         long currentTime = System.currentTimeMillis();
-        long timeDiff = currentTime - Long.parseLong(ReuseableClass.getFromPreference("appStartingDate", this));
-        Log.v("TAG", "firstTime: " + Long.parseLong(ReuseableClass.getFromPreference("appStartingDate", this)));
+        long timeDiff = currentTime - Long.parseLong(ReusableClass.getFromPreference("appStartingDate", this));
+        Log.v("TAG", "firstTime: " + Long.parseLong(ReusableClass.getFromPreference("appStartingDate", this)));
         Log.v("TAG", "currentTime: " + currentTime);
         Log.v("TAG", "Time Diff: " + timeDiff);
 
         //Starting date ~ 1424165427370 = 17-02-2015 15:00:00 India Time
         //Trial Period  ~ 1000*60*60*24*4 = 345600000 mili sec (4 days)
 
-        if (timeDiff > 1000*10)
+        if (timeDiff > 1000*60*60*24*60)
         {
             //Finish App
             //finish();

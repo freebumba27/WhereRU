@@ -1,10 +1,8 @@
 package com.bumba27.whereru;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -12,14 +10,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bumba27.utils.ReuseableClass;
+import com.bumba27.utils.ReusableClass;
 
 import java.util.ArrayList;
 
@@ -42,14 +39,12 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 
 		recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE,"en");
-		recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,this.getPackageName());
-		recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+		recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
+		recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
 		recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
 
+		mute();
 		speech.startListening(recognizerIntent);
-		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-		mStreamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC); // getting system volume into var for later un-muting 
-		mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0); // setting system volume to zero, muting
 		//speech.stopListening();
 	}
 
@@ -86,7 +81,7 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				if (getFromPreference("onOffFlag", SimpleVoiceService.this).equalsIgnoreCase("on")) {
+				if (ReusableClass.getFromPreference("onOffFlag", SimpleVoiceService.this).equalsIgnoreCase("on")) {
 					speech.startListening(recognizerIntent);
 				} else {
 					//speech.stopListening();
@@ -109,12 +104,13 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 
 	@Override
 	public void onReadyForSpeech(Bundle arg0) {
-	    mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mStreamVolume, 0); // again setting the system volume back to the original, un-mutting
+		unMute();
 		Log.i(LOG_TAG, "onReadyForSpeech");
 	}
 
 	@Override
 	public void onResults(Bundle results) {
+
 		Log.i(LOG_TAG, "onResults");
 		ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 		String text = "";
@@ -123,7 +119,9 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 
 		Log.i(LOG_TAG, "Result: " + text);
 		Toast.makeText(con, "Word captured: " + text, Toast.LENGTH_LONG).show();
-		if(text.contains("android phone"))
+		if(text.contains("android phone") ||
+				(ReusableClass.getFromPreference("RecordedText",SimpleVoiceService.this).contains(text) &&
+						!ReusableClass.getFromPreference("RecordedText",SimpleVoiceService.this).equalsIgnoreCase("")) )
 		{
 			try
 			{
@@ -135,17 +133,17 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 //				v.vibrate(50);
 				
 				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-				long[] pattern = {0, 100, 1000, 300, 200, 100, 500, 200, 100};
+				long[] pattern = {1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000};
 				v.vibrate(pattern, -1);
 
 				Uri alert = null;
-				if(ReuseableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this).equalsIgnoreCase(""))
+				if(ReusableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this).equalsIgnoreCase(""))
 				{
 					alert = Uri.parse("android.resource://" + con.getPackageName() + "/" + R.raw.i_am_here);
 				}
 				else
 				{
-					alert = Uri.parse(ReuseableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this));
+					alert = Uri.parse(ReusableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this));
 				}
 
 				final MediaPlayer mMediaPlayer = new MediaPlayer();
@@ -161,7 +159,7 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 		        
 		        if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) 
 		        {
-		            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+					unMute();
 		            mMediaPlayer.setLooping(true);
 		            mMediaPlayer.prepare();
 		            mMediaPlayer.start();
@@ -175,7 +173,7 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 						mMediaPlayer.stop();
 						mMediaPlayer.release();
 					}
-				}, 1000*30);
+				}, 1000*60);
 			} 
 			catch(Exception e)
 			{
@@ -242,37 +240,29 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	//===================================================================================================================================
-	//Preference variable
-	//===================================================================================================================================
 
-	//--------------------------------------------
-	// method to save variable in preference
-	//--------------------------------------------
-	public static void saveInPreference(String name, String content, Activity myActivity) {
-		SharedPreferences preferences = PreferenceManager
-				.getDefaultSharedPreferences(myActivity);
-		SharedPreferences.Editor editor = preferences.edit();
-		editor.putString(name, content);
-		editor.commit();
+	public void mute()
+	{
+		//mute audio
+
+		AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+		amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
+		amanager.setStreamMute(AudioManager.STREAM_ALARM, true);
+		amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+		amanager.setStreamMute(AudioManager.STREAM_RING, true);
+		amanager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
 	}
 
-	//--------------------------------------------
-	// getting content from preferences
-	//--------------------------------------------
-	public static String getFromPreference(String variable_name, Context con) {
-		String preference_return;
-		SharedPreferences preferences = PreferenceManager
-				.getDefaultSharedPreferences(con);
-		preference_return = preferences.getString(variable_name, "");
+	public void unMute()
+	{
+		//unmute audio
 
-		return preference_return;
+		AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
+		amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
+		amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
+		amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+		amanager.setStreamMute(AudioManager.STREAM_RING, false);
+		amanager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
 	}
-
-	//===================================================================================================================================
-	//Preference variable
-	//===================================================================================================================================
-
 }

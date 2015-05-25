@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bumba27.utils.ReuseableClass;
+import com.bumba27.utils.ReusableClass;
 
 import java.net.URI;
 
@@ -48,12 +48,18 @@ public class SettingsActivity extends Activity {
             if (uri != null)
             {
                 Toast.makeText(getBaseContext(), getString(R.string.thanks_for_saving_ringtone), Toast.LENGTH_SHORT).show();
-                ReuseableClass.saveInPreference("ring_tone_uri", uri.toString(), SettingsActivity.this);
+                ReusableClass.saveInPreference("ring_tone_uri", uri.toString(), SettingsActivity.this);
             }
             else
             {
                 Toast.makeText(getBaseContext(), getString(R.string.ring_tone_selection_error), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void openRecOwnVoiceActivity(View view) {
+        Intent i = new Intent(this, RecOwnVoice.class);
+        finish();
+        startActivity(i);
     }
 }

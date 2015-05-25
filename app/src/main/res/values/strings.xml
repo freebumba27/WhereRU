@@ -12,5 +12,8 @@
 	<string name="ring_tone_selection_error">Due to some error no ringtone selected. Try another !!</string>
 	<string name="select_your_ring_tone">Select your ringtone:</string>
 	<string name="trial_period_expaired">Sorry! Trial period expired. Purchase full version of the application.</string>
+    <string name="title_activity_rec_own_voice">RecOwnVoice</string>
+	<string name="say_some_thing_btn">Say Something</string>
+	<string name="save_button_txt">SAVE</string>
 
 </resources>

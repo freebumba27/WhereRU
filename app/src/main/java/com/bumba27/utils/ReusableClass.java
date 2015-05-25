@@ -8,11 +8,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
-public class ReuseableClass {
+public class ReusableClass {
 
 
-    public static Typeface getFontStyle(Context c) {
+    public static Typeface getFontGillSansMTProStyle(Context c) {
         return Typeface.createFromAsset(c.getAssets(), "fonts/GillSansMTPro_UltraBold.ttf");
+    }
+
+    public static Typeface getFontSFHypocrisySketchedStyle(Context c) {
+        return Typeface.createFromAsset(c.getAssets(), "fonts/SFHypocrisySketched.ttf");
     }
 
     //===================================================================================================================================
