@@ -1,6 +1,16 @@
 ECLIPSE ANDROID PROJECT IMPORT SUMMARY
 ======================================
 
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* ic_launcher-web.png
+* proguard-project.txt
+* readme.txt
+
 Replaced Jars with Dependencies:
 --------------------------------
 The importer recognized the following .jar files as third party
@@ -11,17 +21,31 @@ the .jar file in your project was of an older version than the
 dependency we picked, which could render the project not compileable.
 You can disable the jar replacement in the import wizard and try again:
 
-android-support-v4.jar => com.android.support:support-v4:21.0.3
+android-support-v4.jar => com.android.support:support-v4:20.+
 
 Moved Files:
 ------------
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-* AndroidManifest.xml => app\src\main\AndroidManifest.xml
-* assets\ => app\src\main\assets
-* res\ => app\src\main\res\
-* src\ => app\src\main\java\
+* AndroidManifest.xml => InAppPurchase\src\main\AndroidManifest.xml
+* res\ => InAppPurchase\src\main\res\
+* src\ => InAppPurchase\src\main\java\
+* src\com\android\vending\billing\IInAppBillingService.aidl => InAppPurchase\src\main\aidl\com\android\vending\billing\IInAppBillingService.aidl
+
+Missing Android Support Repository:
+-----------------------------------
+Some useful libraries, such as the Android Support Library, are
+installed from a special Maven repository, which should be installed
+via the SDK manager.
+
+It looks like this library is missing from your SDK installation at:
+null
+
+To install it, open the SDK manager, and in the Extras category,
+select "Android Support Repository". You may also want to install the
+"Google Repository" if you want to use libraries like Google Play
+Services.
 
 Next Steps:
 -----------

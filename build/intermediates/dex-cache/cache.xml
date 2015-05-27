@@ -2,6 +2,34 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\anirban\AndroidStudioProjects\WhereRU\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="C:\Users\anirban\AndroidStudioProjects\WhereRU\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-13df353e492ad288de7d08564b44082b92ed957d.jar" />
+    </item>
+    <item
+        jar="C:\Users\anirban\AndroidStudioProjects\WhereRU\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="C:\Users\anirban\AndroidStudioProjects\WhereRU\app\build\intermediates\pre-dexed\debug\classes-bb3b4147d8f9ab141c56359a8bca4e7318becfad.jar" />
+    </item>
+    <item
+        jar="C:\Users\anirban\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa">
+        <dex dex="C:\Users\anirban\AndroidStudioProjects\WhereRU\InAppPurchase\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-f526d417c67d43a7214c1c2570d357bab512a716.jar" />
+    </item>
+    <item
+        jar="C:\Users\anirban\AndroidStudioProjects\WhereRU\InAppPurchase\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0">
+        <dex dex="C:\Users\anirban\AndroidStudioProjects\WhereRU\InAppPurchase\build\intermediates\pre-dexed\debug\classes-cb8d1517a0b8c08cd67211cb4d8f62d837a56d94.jar" />
+    </item>
+    <item
         jar="C:\Users\anirban\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -16,18 +44,11 @@
         <dex dex="C:\Users\anirban\AndroidStudioProjects\WhereRU\app\build\intermediates\pre-dexed\debug\classes-6c8fd6f6a2b95682bac1b0736b924271903495ac.jar" />
     </item>
     <item
-        jar="C:\Users\anirban\AndroidStudioProjects\WhereRU\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
+        jar="C:\Users\anirban\AndroidStudioProjects\WhereRU\InAppPurchase\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\jars\libs\internal_impl-20.0.0.jar"
         jumboMode="false"
-        revision="22.0.1"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="C:\Users\anirban\AndroidStudioProjects\WhereRU\app\build\intermediates\pre-dexed\debug\classes-bb3b4147d8f9ab141c56359a8bca4e7318becfad.jar" />
-    </item>
-    <item
-        jar="C:\Users\anirban\AndroidStudioProjects\WhereRU\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="C:\Users\anirban\AndroidStudioProjects\WhereRU\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-13df353e492ad288de7d08564b44082b92ed957d.jar" />
+        revision="19.1.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d">
+        <dex dex="C:\Users\anirban\AndroidStudioProjects\WhereRU\InAppPurchase\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-5fc7305c0cd44942df527831d5f10340338e41b3.jar" />
     </item>
 
 </items>

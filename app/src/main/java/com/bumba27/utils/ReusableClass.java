@@ -15,8 +15,8 @@ public class ReusableClass {
         return Typeface.createFromAsset(c.getAssets(), "fonts/GillSansMTPro_UltraBold.ttf");
     }
 
-    public static Typeface getFontSFHypocrisySketchedStyle(Context c) {
-        return Typeface.createFromAsset(c.getAssets(), "fonts/SFHypocrisySketched.ttf");
+    public static Typeface getFontGenericaBoldStyle(Context c) {
+        return Typeface.createFromAsset(c.getAssets(), "fonts/Generica Bold.ttf");
     }
 
     //===================================================================================================================================

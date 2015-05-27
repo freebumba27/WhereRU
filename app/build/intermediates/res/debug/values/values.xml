@@ -196,6 +196,9 @@
     <string name="app_name">Where R U</string>
     <string name="double_back_press_message">Press again to exit !!</string>
     <string name="hello_world">Hello world!</string>
+    <string name="payment_successful">Thanks for purchasing full version !!</string>
+    <string name="payment_unsuccessful">Sorry payment is not successful !!</string>
+    <string name="purchase_full_ver_title">Purchase Full Version</string>
     <string name="ring_tone_selection_error">Due to some error no ringtone selected. Try another !!</string>
     <string name="save_button_txt">SAVE</string>
     <string name="say_some_thing_btn">Say Something</string>

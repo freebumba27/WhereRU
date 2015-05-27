@@ -21,8 +21,8 @@ public class RecOwnVoice extends Activity {
         setContentView(R.layout.activity_rec_own_voice);
 
         textViewResult = (TextView)findViewById(R.id.textViewResult);
-        ((TextView)findViewById(R.id.textViewTitle)).setTypeface(ReusableClass.getFontSFHypocrisySketchedStyle(this));
-        textViewResult.setTypeface(ReusableClass.getFontSFHypocrisySketchedStyle(this));
+        ((TextView)findViewById(R.id.textViewTitle)).setTypeface(ReusableClass.getFontGenericaBoldStyle(this));
+        textViewResult.setTypeface(ReusableClass.getFontGenericaBoldStyle(this));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RecOwnVoice extends Activity {
         try {
             startActivityForResult(intent, 1);
         } catch (ActivityNotFoundException a) {
-            Toast.makeText(RecOwnVoice.this, "Oops! Your device doesn't support Speech to Text", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RecOwnVoice.this, getString(R.string.device_do_not_support_text_to_speech), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -63,6 +63,16 @@ public class RecOwnVoice extends Activity {
     }
 
     public void saveRecordedText(View view) {
-        ReusableClass.saveInPreference("RecordedText", textViewResult.toString(), RecOwnVoice.this);
+
+        if(textViewResult.getText().toString().length()>0) {
+            ReusableClass.saveInPreference("RecordedText", textViewResult.toString(), RecOwnVoice.this);
+            Toast.makeText(this, getString(R.string.thanks_message_on_saving_own_word), Toast.LENGTH_LONG).show();
+
+            Intent i = new Intent(this, SettingsActivity.class);
+            finish();
+            startActivity(i);
+        }
+        else
+            Toast.makeText(this, getString(R.string.no_word_error) , Toast.LENGTH_LONG).show();
     }
 }

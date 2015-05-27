@@ -15,5 +15,11 @@
     <string name="title_activity_rec_own_voice">RecOwnVoice</string>
 	<string name="say_some_thing_btn">Say Something</string>
 	<string name="save_button_txt">SAVE</string>
+	<string name="payment_unsuccessful">Sorry payment is not successful !!</string>
+	<string name="payment_successful">Thanks for purchasing full version !!</string>
+	<string name="purchase_full_ver_title">Purchase Full Version</string>
+	<string name="no_word_error">No word recognized, say something !!</string>
+	<string name="thanks_message_on_saving_own_word">Thanks for saving own word !!</string>
+	<string name="device_do_not_support_text_to_speech">Oops! Your device doesn\'t support Speech to Text</string>
 
 </resources>
