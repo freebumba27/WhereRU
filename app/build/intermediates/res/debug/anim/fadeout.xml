@@ -4,4 +4,4 @@
     android:fromAlpha="1.0"
     android:interpolator="@android:anim/decelerate_interpolator"
     android:toAlpha="0.0" />
-<!-- From: file:/C:/Users/anirban/AndroidStudioProjects/WhereRU/app/src/main/res/anim/fadeout.xml -->
+<!-- From: file:/F:/Development/freelancer_workspace/Muchas%20Gracias%20-%20Swiz/src/WhereRU_190515/app/src/main/res/anim/fadeout.xml -->

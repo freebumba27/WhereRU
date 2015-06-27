@@ -107,3 +107,11 @@ ADDED from AndroidManifest.xml:43:9
 		ADDED from AndroidManifest.xml:45:13
 	android:name
 		ADDED from AndroidManifest.xml:44:13
+receiver#com.bumba27.utils.RestartServiceReceiver
+ADDED from AndroidManifest.xml:48:9
+	android:name
+		ADDED from AndroidManifest.xml:49:13
+action#YouWillNeverKillMe
+ADDED from AndroidManifest.xml:50:13
+	android:name
+		ADDED from AndroidManifest.xml:50:21

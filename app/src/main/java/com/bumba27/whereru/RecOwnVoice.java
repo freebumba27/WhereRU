@@ -65,7 +65,7 @@ public class RecOwnVoice extends Activity {
     public void saveRecordedText(View view) {
 
         if(textViewResult.getText().toString().length()>0) {
-            ReusableClass.saveInPreference("RecordedText", textViewResult.toString(), RecOwnVoice.this);
+            ReusableClass.saveInPreference("RecordedText", textViewResult.getText().toString(), RecOwnVoice.this);
             Toast.makeText(this, getString(R.string.thanks_message_on_saving_own_word), Toast.LENGTH_LONG).show();
 
             Intent i = new Intent(this, SettingsActivity.class);

@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/InAppPurchase/InAppPurchase.iml" filepath="$PROJECT_DIR$/InAppPurchase/InAppPurchase.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WhereRU.iml" filepath="$PROJECT_DIR$/WhereRU.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WhereRU_190515.iml" filepath="$PROJECT_DIR$/WhereRU_190515.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/continuousvoicerecognizer/continuousvoicerecognizer.iml" filepath="$PROJECT_DIR$/continuousvoicerecognizer/continuousvoicerecognizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/speechToText/speechToText.iml" filepath="$PROJECT_DIR$/speechToText/speechToText.iml" />
     </modules>
   </component>
 </project>

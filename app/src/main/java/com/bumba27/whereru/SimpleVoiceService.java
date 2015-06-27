@@ -22,247 +22,237 @@ import java.util.ArrayList;
 
 public class SimpleVoiceService extends Service implements RecognitionListener {
 
-	private SpeechRecognizer speech = null;
-	private Intent recognizerIntent;
-	private String LOG_TAG = "VoiceRecognitionActivity";
-	Context con;
-	private AudioManager mAudioManager;
-	private int mStreamVolume = 0; 
+    private SpeechRecognizer speech = null;
+    private Intent recognizerIntent;
+    private String LOG_TAG = "VoiceRecognitionActivity";
+    boolean matched = false;
+    Context con;
+    AudioManager am = null;
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-		con = SimpleVoiceService.this;
-		speech = SpeechRecognizer.createSpeechRecognizer(this);
-		speech.setRecognitionListener(this);
+        am = (AudioManager) getSystemService(Context.SENSOR_SERVICE);
+        con = SimpleVoiceService.this;
+        speech = SpeechRecognizer.createSpeechRecognizer(this);
+        speech.setRecognitionListener(this);
 
-		recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-		recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE,"en");
-		recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
-		recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
-		recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-
-		mute();
-		speech.startListening(recognizerIntent);
-		//speech.stopListening();
-	}
+        recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en");
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
 
 
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(!matched){
+                    mute();
+                    speech.startListening(recognizerIntent);
+                }
+            }
+        }, 800);
+    }
 
-	@Override
-	public void onBeginningOfSpeech() 
-	{
-		Log.i(LOG_TAG, "onBeginningOfSpeech");
-	}
 
-	@Override
-	public void onBufferReceived(byte[] buffer) 
-	{
-		Log.i(LOG_TAG, "onBufferReceived: " + buffer);
-	}
+    @Override
+    public void onBeginningOfSpeech() {
+        Log.i(LOG_TAG, "onBeginningOfSpeech");
+    }
 
-	@Override
-	public void onEndOfSpeech() 
-	{
-		Log.i(LOG_TAG, "onEndOfSpeech");
-		speech.startListening(recognizerIntent);
-		//stopSelf();
-	}
+    @Override
+    public void onBufferReceived(byte[] buffer) {
+        Log.i(LOG_TAG, "onBufferReceived: " + buffer);
+    }
 
-	@Override
-	public void onError(int errorCode) 
-	{
-		String errorMessage = getErrorText(errorCode);
-		Log.d(LOG_TAG, "FAILED " + errorMessage);
-		
-		
-		final Handler handler = new Handler();
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				if (ReusableClass.getFromPreference("onOffFlag", SimpleVoiceService.this).equalsIgnoreCase("on")) {
-					speech.startListening(recognizerIntent);
-				} else {
-					//speech.stopListening();
-					return;
-				}
-			}
-		}, 800);
-		//stopSelf();
-	}
+    @Override
+    public void onEndOfSpeech() {
+        Log.i(LOG_TAG, "onEndOfSpeech");
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(!matched) {
+                    mute();
+                    speech.startListening(recognizerIntent);
+                }
+            }
+        }, 800);
+    }
 
-	@Override
-	public void onEvent(int arg0, Bundle arg1) {
-		Log.i(LOG_TAG, "onEvent");
-	}
+    @Override
+    public void onError(int errorCode) {
+        String errorMessage = getErrorText(errorCode);
+        Log.d(LOG_TAG, "FAILED " + errorMessage);
 
-	@Override
-	public void onPartialResults(Bundle arg0) {
-		Log.i(LOG_TAG, "onPartialResults");
-	}
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(!matched) {
+                    mute();
+                    speech.startListening(recognizerIntent);
+                }
+            }
+        }, 800);
+    }
 
-	@Override
-	public void onReadyForSpeech(Bundle arg0) {
-		unMute();
-		Log.i(LOG_TAG, "onReadyForSpeech");
-	}
+    @Override
+    public void onEvent(int arg0, Bundle arg1) {
+        Log.i(LOG_TAG, "onEvent");
+    }
 
-	@Override
-	public void onResults(Bundle results) {
+    @Override
+    public void onPartialResults(Bundle arg0) {
+        Log.i(LOG_TAG, "onPartialResults");
+    }
 
-		Log.i(LOG_TAG, "onResults");
-		ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-		String text = "";
-		for (String result : matches)
-			text += result + " ";
+    @Override
+    public void onReadyForSpeech(Bundle arg0) {
+        //unMute();
+        Log.i(LOG_TAG, "onReadyForSpeech");
+    }
 
-		Log.i(LOG_TAG, "Result: " + text);
-		Toast.makeText(con, "Word captured: " + text, Toast.LENGTH_LONG).show();
-		if(text.contains("android phone") ||
-				(ReusableClass.getFromPreference("RecordedText",SimpleVoiceService.this).contains(text) &&
-						!ReusableClass.getFromPreference("RecordedText",SimpleVoiceService.this).equalsIgnoreCase("")) )
-		{
-			try
-			{
-				Log.i(LOG_TAG, "Matched");
-				
-//				MediaPlayer mediaPlayer = MediaPlayer.create(con, R.raw.i_am_here);
-//				mediaPlayer.start();
-//				Vibrator v = (Vibrator) this.con.getSystemService(Context.VIBRATOR_SERVICE);
-//				v.vibrate(50);
-				
-				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-				long[] pattern = {1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000};
-				v.vibrate(pattern, -1);
+    @Override
+    public void onResults(Bundle results) {
 
-				Uri alert = null;
-				if(ReusableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this).equalsIgnoreCase(""))
-				{
-					alert = Uri.parse("android.resource://" + con.getPackageName() + "/" + R.raw.i_am_here);
-				}
-				else
-				{
-					alert = Uri.parse(ReusableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this));
-				}
+        Log.i(LOG_TAG, "onResults");
+        ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        String text = "";
+        for (String result : matches)
+            text += result + " ";
 
-				final MediaPlayer mMediaPlayer = new MediaPlayer();
-				mMediaPlayer.setDataSource(this, alert);
-		        final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-		        try 
-		        {
-		        	mMediaPlayer.setVolume(Float.parseFloat(Double.toString(audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION) / 7.0)),
-		                                Float.parseFloat(Double.toString(audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION) / 7.0)));
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-		        
-		        if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) 
-		        {
-					unMute();
-		            mMediaPlayer.setLooping(true);
-		            mMediaPlayer.prepare();
-		            mMediaPlayer.start();
-		        }
-		        
-		        final Handler handler = new Handler();
-				handler.postDelayed(new Runnable() {
-					@Override
-					public void run() 
-					{
-						mMediaPlayer.stop();
-						mMediaPlayer.release();
-					}
-				}, 1000*60);
-			} 
-			catch(Exception e)
-			{
-				Toast.makeText(this, "Media file not supported !!", Toast.LENGTH_LONG).show();
-			}
+        Log.i(LOG_TAG, "Result: " + text);
+        String savedText = ReusableClass.getFromPreference("RecordedText", SimpleVoiceService.this);
+        //Toast.makeText(con, "Word captured: " + text + "  :: saved text: " + savedText, Toast.LENGTH_LONG).show();
 
-		}
-		//stopSelf();
-	}
+        if (text.matches("(.*)android phone(.*)") || (text.matches("(.*)" + savedText + "(.*)") && !savedText.equalsIgnoreCase(""))) {
+            try {
+                Log.i(LOG_TAG, "Matched");
+                matched = true;
 
-	@Override
-	public void onRmsChanged(float rmsdB) 
-	{
-		Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
-	}
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                long[] pattern = {1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000, 1000, 2000, 3000, 4000};
+                v.vibrate(pattern, -1);
 
-	public static String getErrorText(int errorCode) {
-		String message;
-		switch (errorCode) {
-		case SpeechRecognizer.ERROR_AUDIO:
-			message = "Audio recording error";
-			break;
-		case SpeechRecognizer.ERROR_CLIENT:
-			message = "Client side error";
-			break;
-		case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-			message = "Insufficient permissions";
-			break;
-		case SpeechRecognizer.ERROR_NETWORK:
-			message = "Network error";
-			break;
-		case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-			message = "Network timeout";
-			break;
-		case SpeechRecognizer.ERROR_NO_MATCH:
-			message = "No match";
-			break;
-		case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-			message = "RecognitionService busy";
-			break;
-		case SpeechRecognizer.ERROR_SERVER:
-			message = "error from server";
-			break;
-		case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-			message = "No speech input";
-			break;
-		default:
-			message = "Didn't understand, please try again.";
-			break;
-		}
-		return message;
-	}
+                Uri alert = null;
+                if (ReusableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this).equalsIgnoreCase("")) {
+                    alert = Uri.parse("android.resource://" + con.getPackageName() + "/" + R.raw.i_am_here);
+                } else {
+                    alert = Uri.parse(ReusableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this));
+                }
 
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		//speech.stopListening();
-		//sendBroadcast(new Intent("YouWillNeverKillMe"));
-	}
+                final MediaPlayer mMediaPlayer = new MediaPlayer();
 
-	@Override
-	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+                mMediaPlayer.setDataSource(this, alert);
 
-	public void mute()
-	{
-		//mute audio
+//                am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//                try {
+//                    mMediaPlayer.setVolume(Float.parseFloat(Double.toString(am.getStreamVolume(AudioManager.STREAM_NOTIFICATION) / 7.0)),
+//                            Float.parseFloat(Double.toString(am.getStreamVolume(AudioManager.STREAM_NOTIFICATION) / 7.0)));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
 
-		AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
-		amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
-		amanager.setStreamMute(AudioManager.STREAM_ALARM, true);
-		amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
-		amanager.setStreamMute(AudioManager.STREAM_RING, true);
-		amanager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
-	}
+                mMediaPlayer.setLooping(true);
+                mMediaPlayer.prepare();
+                mMediaPlayer.start();
 
-	public void unMute()
-	{
-		//unmute audio
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mMediaPlayer.stop();
+                        mMediaPlayer.release();
 
-		AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+                        mute();
+                        speech.startListening(recognizerIntent);
+                        matched = false;
+                    }
+                }, 1000 * 60);
 
-		amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
-		amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
-		amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-		amanager.setStreamMute(AudioManager.STREAM_RING, false);
-		amanager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
-	}
+            } catch (Exception e) {
+                Toast.makeText(this, "Media file not supported !!", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            Log.d("TAG", "No matched !!");
+            if(!matched) {
+                mute();
+                speech.startListening(recognizerIntent);
+            }
+        }
+    }
+
+    @Override
+    public void onRmsChanged(float rmsdB) {
+        Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
+    }
+
+    public String getErrorText(int errorCode) {
+        String message;
+        switch (errorCode) {
+            case SpeechRecognizer.ERROR_AUDIO:
+                message = "Audio recording error";
+                break;
+            case SpeechRecognizer.ERROR_CLIENT:
+                message = "Client side error";
+                break;
+            case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                message = "Insufficient permissions";
+                break;
+            case SpeechRecognizer.ERROR_NETWORK:
+                message = "Network error";
+                break;
+            case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                message = "Network timeout";
+                break;
+            case SpeechRecognizer.ERROR_NO_MATCH:
+                message = "No match";
+                break;
+            case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                message = "RecognitionService busy";
+                break;
+            case SpeechRecognizer.ERROR_SERVER:
+                message = "error from server";
+                break;
+            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                message = "No speech input";
+                break;
+            default:
+                message = "Didn't understand, please try again.";
+                break;
+        }
+        return message;
+    }
+
+    @Override
+    public void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        speech.stopListening();
+
+        unMute();
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void mute() {
+        //mute audio
+        Log.d("TAG", "Mute");
+       am.setStreamMute(AudioManager.STREAM_MUSIC, true);
+    }
+
+    public void unMute() {
+        //unmute audio
+        Log.d("TAG", "UnMute");
+        am.setStreamMute(AudioManager.STREAM_MUSIC, false);
+    }
 }

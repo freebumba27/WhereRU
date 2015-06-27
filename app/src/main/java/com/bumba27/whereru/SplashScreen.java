@@ -90,8 +90,8 @@ public class SplashScreen extends Activity {
                 //Starting date ~ 1424165427370 = 17-02-2015 15:00:00 India Time
                 //Trial Period  ~ 1000*60*60*24*4 = 345600000 mili sec (4 days)
 
-//              if (timeDiff > 1000 * 60 * 60 * 24 * 60) {
-                if (timeDiff > 1000 * 60 * 1) {
+              if (timeDiff > 1000 * 60 * 60 * 24 * 60) {
+//                if (timeDiff > 1000 * 60 * 1) {
                     if (ReusableClass.getFromPreference("FullVersionPurchased", SplashScreen.this).equalsIgnoreCase("yes")) {
                         new Handler().postDelayed(new Runnable() {
                             @Override
