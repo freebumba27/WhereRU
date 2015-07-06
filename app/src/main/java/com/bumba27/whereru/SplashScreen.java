@@ -77,67 +77,62 @@ public class SplashScreen extends Activity {
         logo_layout.setAnimation(slideUp);
 
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-                long currentTime = System.currentTimeMillis();
-                long timeDiff = currentTime - Long.parseLong(ReusableClass.getFromPreference("appStartingDate", SplashScreen.this));
-                Log.v("TAG", "firstTime: " + Long.parseLong(ReusableClass.getFromPreference("appStartingDate", SplashScreen.this)));
-                Log.v("TAG", "currentTime: " + currentTime);
-                Log.v("TAG", "Time Diff: " + timeDiff);
+        long currentTime = System.currentTimeMillis();
+        long timeDiff = currentTime - Long.parseLong(ReusableClass.getFromPreference("appStartingDate", SplashScreen.this));
+        Log.v("TAG", "firstTime: " + Long.parseLong(ReusableClass.getFromPreference("appStartingDate", SplashScreen.this)));
+        Log.v("TAG", "currentTime: " + currentTime);
+        Log.v("TAG", "Time Diff: " + timeDiff);
 
-                //Starting date ~ 1424165427370 = 17-02-2015 15:00:00 India Time
-                //Trial Period  ~ 1000*60*60*24*4 = 345600000 mili sec (4 days)
+        //Starting date ~ 1424165427370 = 17-02-2015 15:00:00 India Time
+        //Trial Period  ~ 1000*60*60*24*4 = 345600000 mili sec (4 days)
 
-              if (timeDiff > 1000 * 60 * 60 * 24 * 60) {
+        if (timeDiff > 1000 * 60 * 60 * 24 * 60) {
 //                if (timeDiff > 1000 * 60 * 1) {
-                    if (ReusableClass.getFromPreference("FullVersionPurchased", SplashScreen.this).equalsIgnoreCase("yes")) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!backPressed) {
-                                    Intent myIntent = new Intent(SplashScreen.this, MainActivity.class);
-                                    finish();
-                                    startActivity(myIntent);
-                                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                                }
-                            }
-                        }, 3500);
-                    } else {
-                        new AlertDialog.Builder(new ContextThemeWrapper(SplashScreen.this, android.R.style.Theme_Holo))
-                                .setTitle(getString(R.string.purchase_full_ver_title))
-                                .setMessage(getString(R.string.trial_period_expaired))
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        mHelper.launchPurchaseFlow(SplashScreen.this, ITEM_SKU, 10001, mPurchaseFinishedListener, "mypurchasetoken");
-                                    }
-                                })
-                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        finish();
-                                    }
-                                })
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
-                    }
-                } else {
-                    //Do the normal things
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!backPressed) {
-                                Intent myIntent = new Intent(SplashScreen.this, MainActivity.class);
-                                finish();
-                                startActivity(myIntent);
-                                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                            }
+            if (ReusableClass.getFromPreference("FullVersionPurchased", SplashScreen.this).equalsIgnoreCase("yes")) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!backPressed) {
+                            Intent myIntent = new Intent(SplashScreen.this, MainActivity.class);
+                            finish();
+                            startActivity(myIntent);
+                            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                         }
-                    }, 3500);
-                }
+                    }
+                }, 3500);
+            } else {
+                new AlertDialog.Builder(new ContextThemeWrapper(SplashScreen.this, android.R.style.Theme_Holo))
+                        .setTitle(getString(R.string.purchase_full_ver_title))
+                        .setMessage(getString(R.string.trial_period_expaired))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                mHelper.launchPurchaseFlow(SplashScreen.this, ITEM_SKU, 10001, mPurchaseFinishedListener, "mypurchasetoken");
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
-        }, 3500);
+        } else {
+            //Do the normal things
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!backPressed) {
+                        Intent myIntent = new Intent(SplashScreen.this, MainActivity.class);
+                        finish();
+                        startActivity(myIntent);
+                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    }
+                }
+            }, 3500);
+        }
     }
 
     @Override

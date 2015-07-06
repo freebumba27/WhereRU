@@ -33,16 +33,22 @@ public class RecOwnVoice extends Activity {
     }
 
     public void openingGoogleVoice(View view) {
-        textViewResult.setText("");
-        /* Call Activity for Voice Input */
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        if(ReusableClass.getFromPreference("onOffFlag", RecOwnVoice.this).equalsIgnoreCase("off")
+                || ReusableClass.getFromPreference("onOffFlag", RecOwnVoice.this).equalsIgnoreCase("")) {
+            textViewResult.setText("");
+            /* Call Activity for Voice Input */
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
 
-        try {
-            startActivityForResult(intent, 1);
-        } catch (ActivityNotFoundException a) {
-            Toast.makeText(RecOwnVoice.this, getString(R.string.device_do_not_support_text_to_speech), Toast.LENGTH_SHORT).show();
+            try {
+                startActivityForResult(intent, 1);
+            } catch (ActivityNotFoundException a) {
+                Toast.makeText(RecOwnVoice.this, getString(R.string.device_do_not_support_text_to_speech), Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            Toast.makeText(this, "Please make sure It's Off !!", Toast.LENGTH_LONG).show();
         }
     }
 

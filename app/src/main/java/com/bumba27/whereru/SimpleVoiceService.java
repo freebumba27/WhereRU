@@ -14,7 +14,6 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.bumba27.utils.ReusableClass;
 
@@ -25,51 +24,42 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
     private String LOG_TAG = "VoiceRecognitionActivity";
-    boolean matched = false;
     Context con;
-    AudioManager am = null;
+    boolean matched = false;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        am = (AudioManager) getSystemService(Context.SENSOR_SERVICE);
         con = SimpleVoiceService.this;
         speech = SpeechRecognizer.createSpeechRecognizer(this);
         speech.setRecognitionListener(this);
 
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en");
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE,"en");
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,this.getPackageName());
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
 
-
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(!matched){
-                    mute();
-                    speech.startListening(recognizerIntent);
-                }
-            }
-        }, 800);
+        mute();
+        speech.startListening(recognizerIntent);
     }
 
-
     @Override
-    public void onBeginningOfSpeech() {
+    public void onBeginningOfSpeech()
+    {
         Log.i(LOG_TAG, "onBeginningOfSpeech");
     }
 
     @Override
-    public void onBufferReceived(byte[] buffer) {
+    public void onBufferReceived(byte[] buffer)
+    {
         Log.i(LOG_TAG, "onBufferReceived: " + buffer);
     }
 
     @Override
-    public void onEndOfSpeech() {
+    public void onEndOfSpeech()
+    {
         Log.i(LOG_TAG, "onEndOfSpeech");
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -84,20 +74,29 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
     }
 
     @Override
-    public void onError(int errorCode) {
+    public void onError(int errorCode)
+    {
         String errorMessage = getErrorText(errorCode);
         Log.d(LOG_TAG, "FAILED " + errorMessage);
+
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
-            public void run() {
-                if(!matched) {
-                    mute();
+            public void run()
+            {
+                if(ReusableClass.getFromPreference("onOffFlag", SimpleVoiceService.this).equalsIgnoreCase("on"))
+                {
                     speech.startListening(recognizerIntent);
+                }
+                else
+                {
+                    //speech.stopListening();
+                    return;
                 }
             }
         }, 800);
+        //stopSelf();
     }
 
     @Override
@@ -112,13 +111,11 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 
     @Override
     public void onReadyForSpeech(Bundle arg0) {
-        //unMute();
         Log.i(LOG_TAG, "onReadyForSpeech");
     }
 
     @Override
     public void onResults(Bundle results) {
-
         Log.i(LOG_TAG, "onResults");
         ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         String text = "";
@@ -127,10 +124,13 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 
         Log.i(LOG_TAG, "Result: " + text);
         String savedText = ReusableClass.getFromPreference("RecordedText", SimpleVoiceService.this);
-        //Toast.makeText(con, "Word captured: " + text + "  :: saved text: " + savedText, Toast.LENGTH_LONG).show();
 
-        if (text.matches("(.*)android phone(.*)") || (text.matches("(.*)" + savedText + "(.*)") && !savedText.equalsIgnoreCase(""))) {
-            try {
+
+        //Toast.makeText(con, "Word captured: " + text, Toast.LENGTH_LONG).show();
+        if(text.matches("(.*)android phone(.*)") || (text.matches("(.*)" + savedText + "(.*)") && !savedText.equalsIgnoreCase("")))
+        {
+            try
+            {
                 Log.i(LOG_TAG, "Matched");
                 matched = true;
 
@@ -145,26 +145,31 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
                     alert = Uri.parse(ReusableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this));
                 }
 
+
+                try
+                {
+                    AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+                    int maxVolumeMusic = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
+                    audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                    audioManager.setStreamVolume(AudioManager.STREAM_ALARM, maxVolumeMusic,AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
                 final MediaPlayer mMediaPlayer = new MediaPlayer();
-
                 mMediaPlayer.setDataSource(this, alert);
-
-//                am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-//                try {
-//                    mMediaPlayer.setVolume(Float.parseFloat(Double.toString(am.getStreamVolume(AudioManager.STREAM_NOTIFICATION) / 7.0)),
-//                            Float.parseFloat(Double.toString(am.getStreamVolume(AudioManager.STREAM_NOTIFICATION) / 7.0)));
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
                 mMediaPlayer.setLooping(true);
                 mMediaPlayer.prepare();
                 mMediaPlayer.start();
 
-                Handler handler = new Handler();
+
+                final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
-                    public void run() {
+                    public void run()
+                    {
                         mMediaPlayer.stop();
                         mMediaPlayer.release();
 
@@ -172,27 +177,24 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
                         speech.startListening(recognizerIntent);
                         matched = false;
                     }
-                }, 1000 * 60);
+                }, 1000*60);
+            }
+            catch(Exception e)
+            {
+                // handle error here..
+            }
 
-            } catch (Exception e) {
-                Toast.makeText(this, "Media file not supported !!", Toast.LENGTH_LONG).show();
-            }
         }
-        else {
-            Log.d("TAG", "No matched !!");
-            if(!matched) {
-                mute();
-                speech.startListening(recognizerIntent);
-            }
-        }
+        //stopSelf();
     }
 
     @Override
-    public void onRmsChanged(float rmsdB) {
+    public void onRmsChanged(float rmsdB)
+    {
         Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
     }
 
-    public String getErrorText(int errorCode) {
+    public static String getErrorText(int errorCode) {
         String message;
         switch (errorCode) {
             case SpeechRecognizer.ERROR_AUDIO:
@@ -233,9 +235,8 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
     public void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
-        speech.stopListening();
-
-        unMute();
+        //speech.stopListening();
+        //sendBroadcast(new Intent("YouWillNeverKillMe"));
     }
 
     @Override
@@ -247,12 +248,16 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
     public void mute() {
         //mute audio
         Log.d("TAG", "Mute");
-       am.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        amanager.setStreamMute(AudioManager.STREAM_ALARM, true);
     }
 
     public void unMute() {
         //unmute audio
         Log.d("TAG", "UnMute");
-        am.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
     }
 }
