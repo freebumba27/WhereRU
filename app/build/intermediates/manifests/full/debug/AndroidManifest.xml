@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -47,6 +49,20 @@
 
         <receiver android:name="com.bumba27.utils.RestartServiceReceiver" >
             <action android:name="YouWillNeverKillMe" />
+        </receiver>
+
+        <service android:name="com.bumba27.whereru.RestartService" >
+        </service>
+        <service
+            android:name="com.bumba27.whereru.ListeningVoiceService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <receiver android:name="com.bumba27.utils.BootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
     </application>
 

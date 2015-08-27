@@ -1694,20 +1694,21 @@ containing a value of this type.
         public static final int double_back_press_message=0x7f070014;
         public static final int hello_world=0x7f070015;
         public static final int no_word_error=0x7f070016;
-        public static final int payment_successful=0x7f070017;
-        public static final int payment_unsuccessful=0x7f070018;
-        public static final int purchase_full_ver_title=0x7f070019;
-        public static final int ring_tone_selection_error=0x7f07001a;
-        public static final int save_button_txt=0x7f07001b;
-        public static final int say_some_thing_btn=0x7f07001c;
-        public static final int select_your_ring_tone=0x7f07001d;
-        public static final int start_listening=0x7f07001e;
-        public static final int stop_listening=0x7f07001f;
-        public static final int thanks_for_saving_ringtone=0x7f070020;
-        public static final int thanks_message_on_saving_own_word=0x7f070021;
-        public static final int title_activity_rec_own_voice=0x7f070022;
-        public static final int title_activity_settings=0x7f070023;
-        public static final int trial_period_expaired=0x7f070024;
+        public static final int notification_message=0x7f070017;
+        public static final int payment_successful=0x7f070018;
+        public static final int payment_unsuccessful=0x7f070019;
+        public static final int purchase_full_ver_title=0x7f07001a;
+        public static final int ring_tone_selection_error=0x7f07001b;
+        public static final int save_button_txt=0x7f07001c;
+        public static final int say_some_thing_btn=0x7f07001d;
+        public static final int select_your_ring_tone=0x7f07001e;
+        public static final int start_listening=0x7f07001f;
+        public static final int stop_listening=0x7f070020;
+        public static final int thanks_for_saving_ringtone=0x7f070021;
+        public static final int thanks_message_on_saving_own_word=0x7f070022;
+        public static final int title_activity_rec_own_voice=0x7f070023;
+        public static final int title_activity_settings=0x7f070024;
+        public static final int trial_period_expaired=0x7f070025;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f09006c;

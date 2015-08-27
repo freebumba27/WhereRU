@@ -1,5 +1,7 @@
 package com.bumba27.whereru;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +21,7 @@ import com.bumba27.utils.ReusableClass;
 
 import java.util.ArrayList;
 
-public class SimpleVoiceService extends Service implements RecognitionListener {
+public class ListeningVoiceService extends Service implements RecognitionListener {
 
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
@@ -27,11 +29,18 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
     Context con;
     boolean matched = false;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    public ListeningVoiceService() {
+        con = ListeningVoiceService.this;
+    }
 
-        con = SimpleVoiceService.this;
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
         speech = SpeechRecognizer.createSpeechRecognizer(this);
         speech.setRecognitionListener(this);
 
@@ -43,23 +52,43 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
 
         mute();
         speech.startListening(recognizerIntent);
+        makingForeGroundService();
+
+        return (START_STICKY);
+    }
+
+    private void makingForeGroundService() {
+        Notification notification = new Notification(R.drawable.ic_launcher, getText(R.string.app_name),
+                System.currentTimeMillis());
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        notification.setLatestEventInfo(this, getText(R.string.app_name),
+                getText(R.string.notification_message), pendingIntent);
+        startForeground(007, notification);
     }
 
     @Override
-    public void onBeginningOfSpeech()
-    {
+    public void onReadyForSpeech(Bundle params) {
+        Log.i(LOG_TAG, "onReadyForSpeech");
+    }
+
+    @Override
+    public void onBeginningOfSpeech() {
         Log.i(LOG_TAG, "onBeginningOfSpeech");
     }
 
     @Override
-    public void onBufferReceived(byte[] buffer)
-    {
+    public void onRmsChanged(float rmsdB) {
+        Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
+    }
+
+    @Override
+    public void onBufferReceived(byte[] buffer) {
         Log.i(LOG_TAG, "onBufferReceived: " + buffer);
     }
 
     @Override
-    public void onEndOfSpeech()
-    {
+    public void onEndOfSpeech() {
         Log.i(LOG_TAG, "onEndOfSpeech");
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -74,43 +103,28 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
     }
 
     @Override
-    public void onError(int errorCode)
-    {
-        String errorMessage = getErrorText(errorCode);
+    public void onError(int error) {
+        String errorMessage = getErrorText(error);
         Log.d(LOG_TAG, "FAILED " + errorMessage);
 
-        if(errorMessage.equalsIgnoreCase("RecognitionService busy"))
-            //iterateInstalledApps();
-            startService(new Intent(con, RestartService.class));
+//        if(errorMessage.equalsIgnoreCase("RecognitionService busy"))
+//            speech.stopListening();
+//            startService(new Intent(con, RestartService.class));
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (ReusableClass.getFromPreference("onOffFlag", SimpleVoiceService.this).equalsIgnoreCase("on")) {
-                    speech.startListening(recognizerIntent);
-                } else {
-                    //speech.stopListening();
-                    return;
+        if (!matched) {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (ReusableClass.getFromPreference("onOffFlag", ListeningVoiceService.this).equalsIgnoreCase("on")) {
+                        speech.startListening(recognizerIntent);
+                    } else {
+                        //speech.stopListening();
+                        return;
+                    }
                 }
-            }
-        }, 800);
-        //stopSelf();
-    }
-
-    @Override
-    public void onEvent(int arg0, Bundle arg1) {
-        Log.i(LOG_TAG, "onEvent");
-    }
-
-    @Override
-    public void onPartialResults(Bundle arg0) {
-        Log.i(LOG_TAG, "onPartialResults");
-    }
-
-    @Override
-    public void onReadyForSpeech(Bundle arg0) {
-        Log.i(LOG_TAG, "onReadyForSpeech");
+            }, 800);
+        }
     }
 
     @Override
@@ -122,11 +136,11 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
             text += result + " ";
 
         Log.i(LOG_TAG, "Result: " + text);
-        String savedText = ReusableClass.getFromPreference("RecordedText", SimpleVoiceService.this);
+        String savedText = ReusableClass.getFromPreference("RecordedText", con);
 
 
         //Toast.makeText(con, "Word captured: " + text, Toast.LENGTH_LONG).show();
-        if(text.matches("(.*)android phone(.*)") || (text.matches("(.*)" + savedText + "(.*)") && !savedText.equalsIgnoreCase("")))
+        if(text.toLowerCase().contains("android".toLowerCase()) || (text.matches("(.*)" + savedText + "(.*)") && !savedText.equalsIgnoreCase("")))
         {
             try
             {
@@ -138,10 +152,10 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
                 v.vibrate(pattern, -1);
 
                 Uri alert = null;
-                if (ReusableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this).equalsIgnoreCase("")) {
+                if (ReusableClass.getFromPreference("ring_tone_uri", con).equalsIgnoreCase("")) {
                     alert = Uri.parse("android.resource://" + con.getPackageName() + "/" + R.raw.i_am_here);
                 } else {
-                    alert = Uri.parse(ReusableClass.getFromPreference("ring_tone_uri", SimpleVoiceService.this));
+                    alert = Uri.parse(ReusableClass.getFromPreference("ring_tone_uri", con));
                 }
 
 
@@ -185,13 +199,46 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
             }
 
         }
-        //stopSelf();
+        else{
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (ReusableClass.getFromPreference("onOffFlag", ListeningVoiceService.this).equalsIgnoreCase("on")) {
+                        speech.startListening(recognizerIntent);
+                    } else {
+                        //speech.stopListening();
+                        return;
+                    }
+                }
+            }, 800);
+        }
     }
 
     @Override
-    public void onRmsChanged(float rmsdB)
-    {
-        Log.i(LOG_TAG, "onRmsChanged: " + rmsdB);
+    public void onPartialResults(Bundle partialResults) {
+        Log.i(LOG_TAG, "partialResults");
+    }
+
+    @Override
+    public void onEvent(int eventType, Bundle params) {
+
+    }
+
+    public void mute() {
+        //mute audio
+        Log.d("TAG", "Mute");
+        AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        amanager.setStreamMute(AudioManager.STREAM_ALARM, true);
+    }
+
+    public void unMute() {
+        //unmute audio
+        Log.d("TAG", "UnMute");
+        AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
     }
 
     public static String getErrorText(int errorCode) {
@@ -230,98 +277,4 @@ public class SimpleVoiceService extends Service implements RecognitionListener {
         }
         return message;
     }
-
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        sendBroadcast(new Intent("YouWillNeverKillMe"));
-        super.onTaskRemoved(rootIntent);
-    }
-
-    @Override
-    public void onLowMemory() {
-        Log.d("TAG", "service YouWillNeverKillMe onLowMemory");
-        sendBroadcast(new Intent("YouWillNeverKillMe"));
-        super.onLowMemory();
-    }
-
-    @Override
-    public void onTrimMemory(int level) {
-        Log.d("TAG", "service YouWillNeverKillMe onTrimMemory");
-        sendBroadcast(new Intent("YouWillNeverKillMe"));
-        super.onTrimMemory(level);
-    }
-
-    @Override
-    public void onDestroy() {
-        //speech.stopListening();
-        Log.d("TAG", "service YouWillNeverKillMe OnDestroy");
-        //sendBroadcast(new Intent("YouWillNeverKillMe"));
-        Intent i = new Intent(con, RestartService.class);
-        con.startService(i);
-
-        super.onDestroy();
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    public void mute() {
-        //mute audio
-        Log.d("TAG", "Mute");
-        AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
-        amanager.setStreamMute(AudioManager.STREAM_ALARM, true);
-    }
-
-    public void unMute() {
-        //unmute audio
-        Log.d("TAG", "UnMute");
-        AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-        amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
-    }
-
-//    private void iterateInstalledApps()
-//    {
-//        PackageManager p = this.getPackageManager();
-//        final List<PackageInfo> appinstall =
-//                p.getInstalledPackages(PackageManager.GET_PERMISSIONS);
-//        for(PackageInfo pInfo:appinstall)
-//        {
-//            String[] reqPermission=pInfo.requestedPermissions;
-//            if(reqPermission!=null)
-//            {
-//                for(int i=0;i<reqPermission.length;i++)
-//                {
-//                    if (((String)reqPermission[i]).equals("android.permission.RECORD_AUDIO"))
-//                    {
-//                        Log.d("TAG", "Package Name: " + pInfo.packageName.toString());
-//                        if(!pInfo.packageName.toString().equalsIgnoreCase("com.bumba27.whereru")
-//                                && !pInfo.packageName.toString().equalsIgnoreCase("com.google.android.apps.plus")) {
-//                            killPackage(pInfo.packageName.toString());
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    private void killPackage(String packageToKill)
-//    {
-//        ActivityManager actvityManager =
-//                (ActivityManager) this.getSystemService( ACTIVITY_SERVICE );
-//        final List<ActivityManager.RunningAppProcessInfo> procInfos =
-//                actvityManager.getRunningAppProcesses();
-//        for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : procInfos)
-//        {
-//            if(runningAppProcessInfo.processName.equals(packageToKill))
-//            {
-//                android.os.Process.sendSignal(runningAppProcessInfo.pid,
-//                        android.os.Process.SIGNAL_KILL);
-//                actvityManager.killBackgroundProcesses(packageToKill);
-//            }
-//        }
-//    }
 }

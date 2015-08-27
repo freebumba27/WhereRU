@@ -47,7 +47,7 @@ public class MainActivity extends Activity{
 			imageViewOnOffButton.setImageResource(R.drawable.on_btn);
 			TextViewMessage.setText(R.string.start_listening);
 			ReusableClass.saveInPreference("onOffFlag", "on", MainActivity.this);
-			startService(new Intent(this, SimpleVoiceService.class));
+			startService(new Intent(this, ListeningVoiceService.class));
 		}
 		else if(ReusableClass.getFromPreference("onOffFlag", MainActivity.this).equalsIgnoreCase("on"))
 		{
@@ -55,7 +55,7 @@ public class MainActivity extends Activity{
 			//Your phone is not listening to you !!
 			TextViewMessage.setText(R.string.stop_listening);
 			ReusableClass.saveInPreference("onOffFlag", "off", MainActivity.this);
-			stopService(new Intent(this, SimpleVoiceService.class));
+			stopService(new Intent(this, ListeningVoiceService.class));
 		}
 	}
 

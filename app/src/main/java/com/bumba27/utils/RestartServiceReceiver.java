@@ -16,7 +16,7 @@ public class RestartServiceReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        Log.e(TAG, "onReceive");
+        Log.e(TAG, "onReceive YouWillNeverKillMe");
 
         if(ReusableClass.getFromPreference("RunAfterOneMin", context).equalsIgnoreCase(""))
         {

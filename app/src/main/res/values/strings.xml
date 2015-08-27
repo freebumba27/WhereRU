@@ -21,5 +21,6 @@
 	<string name="no_word_error">No word recognized, say something !!</string>
 	<string name="thanks_message_on_saving_own_word">Thanks for saving own word !!</string>
 	<string name="device_do_not_support_text_to_speech">Oops! Your device doesn\'t support Speech to Text</string>
+	<string name="notification_message">I am always listing to you ....</string>
 
 </resources>
