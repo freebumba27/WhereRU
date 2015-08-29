@@ -1,10 +1,10 @@
-package com.bumba27.utils;
+package com.ricardos.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.bumba27.whereru.ListeningVoiceService;
+import com.ricardos.whereru.ListeningVoiceService;
 
 /**
  * Created by anirban on 03-08-2015.

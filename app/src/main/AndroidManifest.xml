@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bumba27.whereru"
+    package="com.ricardos.whereru"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -47,7 +47,7 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
 
-        <receiver android:name="com.bumba27.utils.RestartServiceReceiver" >
+        <receiver android:name="com.ricardos.utils.RestartServiceReceiver" >
             <action android:name="YouWillNeverKillMe" />
         </receiver>
 
@@ -58,7 +58,7 @@
             android:enabled="true"
             android:exported="true" >
         </service>
-        <receiver android:name="com.bumba27.utils.BootReceiver" >
+        <receiver android:name="com.ricardos.utils.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

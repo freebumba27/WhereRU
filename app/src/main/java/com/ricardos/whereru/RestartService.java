@@ -1,4 +1,4 @@
-package com.bumba27.whereru;
+package com.ricardos.whereru;
 
 
 import android.app.ActivityManager;

@@ -1,4 +1,4 @@
-package com.bumba27.whereru;
+package com.ricardos.whereru;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumba27.utils.ReusableClass;
+import com.ricardos.utils.ReusableClass;
 
 
 public class RecOwnVoice extends Activity {

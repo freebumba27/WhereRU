@@ -2,60 +2,32 @@
 <items version="2" >
 
     <item
+        jar="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\pre-dexed\release\classes-ddde5401cad443100a806e69708f43409e0e463b.jar" />
+    </item>
+    <item
         jar="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\pre-dexed\debug\classes-b60fb081cd6553ef6bcc12810954fa7ed3ec3ea6.jar" />
-    </item>
-    <item
-        jar="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\continuousvoicerecognizer\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
-        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\continuousvoicerecognizer\build\intermediates\pre-dexed\debug\classes-284428e1321d6d532cb305bc3a9443443da5fa8a.jar" />
+        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\pre-dexed\release\classes-b60fb081cd6553ef6bcc12810954fa7ed3ec3ea6.jar" />
     </item>
     <item
         jar="C:\Users\Dream\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-18388782ffc800014500f3f646b87d49c8707921.jar" />
-    </item>
-    <item
-        jar="C:\Users\Dream\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67">
-        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\speechToText\build\intermediates\pre-dexed\debug\support-v4-19.1.0-85dbd6da23a6af1aa6f9e80a5f296573cb6883c3.jar" />
-    </item>
-    <item
-        jar="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
-        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\pre-dexed\debug\classes-ddde5401cad443100a806e69708f43409e0e463b.jar" />
+        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\pre-dexed\release\support-annotations-22.1.1-18388782ffc800014500f3f646b87d49c8707921.jar" />
     </item>
     <item
         jar="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-4de27412660d28c0b037060207753133a2e58b7b.jar" />
-    </item>
-    <item
-        jar="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\continuousvoicerecognizer\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\continuousvoicerecognizer\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-4d64d01b2fad02641c593a55eafc5702345421f3.jar" />
-    </item>
-    <item
-        jar="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\continuousvoicerecognizer\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\continuousvoicerecognizer\build\intermediates\pre-dexed\debug\classes-9040f1822f8c8c3e0341686401343ec35ef11725.jar" />
+        <dex dex="F:\Development\freelancer_workspace\Muchas Gracias - Swiz\src\WhereRU_190515\app\build\intermediates\pre-dexed\release\internal_impl-22.1.1-4de27412660d28c0b037060207753133a2e58b7b.jar" />
     </item>
 
 </items>

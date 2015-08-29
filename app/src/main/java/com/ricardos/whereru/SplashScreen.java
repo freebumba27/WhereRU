@@ -1,4 +1,4 @@
-package com.bumba27.whereru;
+package com.ricardos.whereru;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,7 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumba27.utils.ReusableClass;
+import com.ricardos.utils.ReusableClass;
 
 import inapputils.IabHelper;
 import inapputils.IabResult;
@@ -48,7 +48,7 @@ public class SplashScreen extends Activity {
         // In App Purchase
         //-------------------------------------------------------------------------
 
-        String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl1bdAJ4OQA+XwRlgX9hFxl4K6otrbMFkN3CbPSLoniRdM+2flHDTjYWqg4UqaxoRXaN9FmCS88e9X032XI4wyBsrr85Y4iU6hgl44ZVllK3MKi5hRp5ICrT8ByrlZQ7NA8vfkNdmpunb72hjBRFNrs6EP3n3vZN7XmIiU0erLHJK/Yph8G0tR9KtHHFBLeSrNxtS11mUaxonJ53kUkZ947B/E0XB60sNMWHsAKqss9EP6dqmt78kGL98A1rwxcSdfwuY9K8Wpb6p9ajN8HRGpSLK3QR4nkH7C+je76pa7apONzR+9FB1Wvv+l1GF9C1/O4YHImDWkrzNm3SHda67BQIDAQAB";
+        String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAigzTq89WPE7xJHy0d+VKrMCx3lelvBMiP67V4KjpKPnD+Tt1eqtZPzvuERF0bC4xJDmHgUTYc3vt729CxE71h8R22N/y1N0Nh3mCPR4XLOHas0eq9bjArk1MkMPFwgkE23MmmLlfDQun3j3KbFRDfxMbFRYsavNEIdFlTnk0B4CnPi0Lr/RgoaCZLZzFfwFN76qZGFiB2/gG2BcopfpaMwbO5ZRVAtSJLugJx2ysakQ+vcD+QtbsxiWe71sr1lw2zrQ94VN+9GowmTCxGvw3ESMsXf4ZkdysJDf0EdlxiGNERhTOcktBlLOfKBCWpSJZb4o0Qkd/uydn1x6kAfoIRQIDAQAB";
         mHelper = new IabHelper(this, base64EncodedPublicKey);
         mHelper.enableDebugLogging(true);
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {

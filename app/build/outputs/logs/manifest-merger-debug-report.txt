@@ -77,7 +77,7 @@ MERGED from com.android.support:support-v4:22.1.1:22:5
 		ADDED from AndroidManifest.xml:24:9
 	android:theme
 		ADDED from AndroidManifest.xml:26:9
-activity#com.bumba27.whereru.SplashScreen
+activity#com.ricardos.whereru.SplashScreen
 ADDED from AndroidManifest.xml:27:9
 	android:theme
 		ADDED from AndroidManifest.xml:29:13
@@ -93,29 +93,29 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:33:17
 	android:name
 		ADDED from AndroidManifest.xml:33:27
-activity#com.bumba27.whereru.MainActivity
+activity#com.ricardos.whereru.MainActivity
 ADDED from AndroidManifest.xml:36:9
 	android:theme
 		ADDED from AndroidManifest.xml:38:13
 	android:name
 		ADDED from AndroidManifest.xml:37:13
-service#com.bumba27.whereru.SimpleVoiceService
+service#com.ricardos.whereru.SimpleVoiceService
 ADDED from AndroidManifest.xml:40:9
 	android:name
 		ADDED from AndroidManifest.xml:40:18
-activity#com.bumba27.whereru.SettingsActivity
+activity#com.ricardos.whereru.SettingsActivity
 ADDED from AndroidManifest.xml:42:9
 	android:theme
 		ADDED from AndroidManifest.xml:44:13
 	android:name
 		ADDED from AndroidManifest.xml:43:13
-activity#com.bumba27.whereru.RecOwnVoice
+activity#com.ricardos.whereru.RecOwnVoice
 ADDED from AndroidManifest.xml:45:9
 	android:theme
 		ADDED from AndroidManifest.xml:47:13
 	android:name
 		ADDED from AndroidManifest.xml:46:13
-receiver#com.bumba27.utils.RestartServiceReceiver
+receiver#com.ricardos.utils.RestartServiceReceiver
 ADDED from AndroidManifest.xml:50:9
 	android:name
 		ADDED from AndroidManifest.xml:50:19
@@ -123,11 +123,11 @@ action#YouWillNeverKillMe
 ADDED from AndroidManifest.xml:51:13
 	android:name
 		ADDED from AndroidManifest.xml:51:21
-service#com.bumba27.whereru.RestartService
+service#com.ricardos.whereru.RestartService
 ADDED from AndroidManifest.xml:54:9
 	android:name
 		ADDED from AndroidManifest.xml:54:18
-service#com.bumba27.whereru.ListeningVoiceService
+service#com.ricardos.whereru.ListeningVoiceService
 ADDED from AndroidManifest.xml:56:9
 	android:enabled
 		ADDED from AndroidManifest.xml:58:13
@@ -135,7 +135,7 @@ ADDED from AndroidManifest.xml:56:9
 		ADDED from AndroidManifest.xml:59:13
 	android:name
 		ADDED from AndroidManifest.xml:57:13
-receiver#com.bumba27.utils.BootReceiver
+receiver#com.ricardos.utils.BootReceiver
 ADDED from AndroidManifest.xml:61:9
 	android:name
 		ADDED from AndroidManifest.xml:61:19

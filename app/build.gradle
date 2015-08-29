@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.bumba27.whereru"
+        applicationId "com.ricardos.whereru"
         minSdkVersion 10
         targetSdkVersion 19
     }

@@ -1,4 +1,4 @@
-package com.bumba27.utils;
+package com.ricardos.utils;
 
 import android.app.Activity;
 import android.content.Context;

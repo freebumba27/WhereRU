@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bumba27.whereru"
+    package="com.ricardos.whereru"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -25,7 +25,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.bumba27.whereru.SplashScreen"
+            android:name="com.ricardos.whereru.SplashScreen"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,32 +34,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.bumba27.whereru.MainActivity"
+            android:name="com.ricardos.whereru.MainActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
 
-        <service android:name="com.bumba27.whereru.SimpleVoiceService" />
+        <service android:name="com.ricardos.whereru.SimpleVoiceService" />
 
         <activity
-            android:name="com.bumba27.whereru.SettingsActivity"
+            android:name="com.ricardos.whereru.SettingsActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
         <activity
-            android:name="com.bumba27.whereru.RecOwnVoice"
+            android:name="com.ricardos.whereru.RecOwnVoice"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
 
-        <receiver android:name="com.bumba27.utils.RestartServiceReceiver" >
+        <receiver android:name="com.ricardos.utils.RestartServiceReceiver" >
             <action android:name="YouWillNeverKillMe" />
         </receiver>
 
-        <service android:name="com.bumba27.whereru.RestartService" >
+        <service android:name="com.ricardos.whereru.RestartService" >
         </service>
         <service
-            android:name="com.bumba27.whereru.ListeningVoiceService"
+            android:name="com.ricardos.whereru.ListeningVoiceService"
             android:enabled="true"
             android:exported="true" >
         </service>
 
-        <receiver android:name="com.bumba27.utils.BootReceiver" >
+        <receiver android:name="com.ricardos.utils.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

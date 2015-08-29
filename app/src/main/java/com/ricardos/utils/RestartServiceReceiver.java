@@ -1,4 +1,4 @@
-package com.bumba27.utils;
+package com.ricardos.utils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 
-import com.bumba27.whereru.SimpleVoiceService;
+import com.ricardos.whereru.SimpleVoiceService;
 
 public class RestartServiceReceiver extends BroadcastReceiver {
     public RestartServiceReceiver() {
